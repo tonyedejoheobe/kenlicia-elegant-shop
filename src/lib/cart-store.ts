@@ -4,13 +4,18 @@ export type CartItem = { id: string; title: string; price: number; image: string
 
 let items: CartItem[] = [];
 let drawerOpen = false;
+let snapshot = { items, drawerOpen };
+const serverSnapshot = { items: [] as CartItem[], drawerOpen: false };
 const listeners = new Set<() => void>();
-const emit = () => listeners.forEach((l) => l());
+const emit = () => {
+  snapshot = { items, drawerOpen };
+  listeners.forEach((l) => l());
+};
 
 export const cartStore = {
   subscribe(l: () => void) { listeners.add(l); return () => listeners.delete(l); },
-  getSnapshot() { return { items, drawerOpen }; },
-  getServerSnapshot() { return { items: [] as CartItem[], drawerOpen: false }; },
+  getSnapshot() { return snapshot; },
+  getServerSnapshot() { return serverSnapshot; },
   add(item: Omit<CartItem, "qty">) {
     const existing = items.find((i) => i.id === item.id);
     items = existing
