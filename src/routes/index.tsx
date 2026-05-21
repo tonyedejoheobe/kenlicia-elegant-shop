@@ -4,27 +4,29 @@ import { ProductCard } from "@/components/site/ProductCard";
 import { products } from "@/data/products";
 import { ArrowRight } from "lucide-react";
 import hero from "@/assets/hero.jpg";
-import catCrochet from "@/assets/cat-crochet.jpg";
-import catBeadwork from "@/assets/cat-beadwork.jpg";
-import catCustom from "@/assets/cat-custom.jpg";
+import catAccessories from "@/assets/cat-accessories.jpg";
+import catFacial from "@/assets/cat-facial.jpg";
+import catScents from "@/assets/cat-scents.jpg";
+import catBeauty from "@/assets/cat-beauty.jpg";
 import founder from "@/assets/founder.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Kenliciaastetics — Handcrafted Crochet & Beadwork" },
-      { name: "description", content: "Discover bespoke crochet and stunning beadwork, lovingly handcrafted by Okekeni Alice Ede." },
+      { title: "Kenliciaastetics — Crochet, Facial Care, Scents & Beauty" },
+      { name: "description", content: "Handmade crochet, facial care, oil perfumes and beauty essentials by Okekeni Alice Ede." },
       { property: "og:title", content: "Kenliciaastetics — Elegance in Everyworld" },
-      { property: "og:description", content: "Handcrafted crochet & bespoke beadwork." },
+      { property: "og:description", content: "Crochet, facial care, scents and beauty — handcrafted with love." },
     ],
   }),
   component: Home,
 });
 
-const categories = [
-  { title: "Exquisite Crochet", image: catCrochet, desc: "Heirloom pieces, softly woven." },
-  { title: "Bespoke Beadwork", image: catBeadwork, desc: "Jewelry strung with intention." },
-  { title: "Custom Orders", image: catCustom, desc: "Crafted entirely for you." },
+const categoryCards = [
+  { title: "Crochet & Accessories", image: catAccessories, desc: "Scrunchies, claw clips, beaded pieces." },
+  { title: "Facial Care", image: catFacial, desc: "Lip gloss, masks, scrubs & more." },
+  { title: "Scents", image: catScents, desc: "Oil perfumes, in cooperation with Idaras." },
+  { title: "Beauty", image: catBeauty, desc: "Nails, lashes, brows & braids." },
 ];
 
 function Home() {
@@ -76,8 +78,8 @@ function Home() {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">Our Craft</p>
             <h2 className="mt-3 font-serif text-4xl sm:text-5xl">Featured Categories</h2>
           </div>
-          <div className="mt-14 grid gap-10 md:grid-cols-3">
-            {categories.map((c) => (
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {categoryCards.map((c) => (
               <div key={c.title} className="group text-center">
                 <div className="relative mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-full border-4 border-[var(--gold)]/40 p-2 transition group-hover:border-[var(--gold)]">
                   <img src={c.image} alt={c.title} loading="lazy" className="h-full w-full rounded-full object-cover transition duration-700 group-hover:scale-105" />
@@ -103,7 +105,7 @@ function Home() {
           <Link to="/shop" className="text-sm font-medium text-primary hover:underline">View all →</Link>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map((p) => <ProductCard key={p.id} product={p} />)}
+          {products.slice(0, 8).map((p) => <ProductCard key={p.id} product={p} />)}
         </div>
       </section>
 
