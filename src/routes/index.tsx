@@ -78,8 +78,8 @@ function Home() {
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">Our Craft</p>
             <h2 className="mt-3 font-serif text-4xl sm:text-5xl">Featured Categories</h2>
           </div>
-          <div className="mt-14 grid gap-10 md:grid-cols-3">
-            {categories.map((c) => (
+          <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+            {categoryCards.map((c) => (
               <div key={c.title} className="group text-center">
                 <div className="relative mx-auto aspect-square w-full max-w-xs overflow-hidden rounded-full border-4 border-[var(--gold)]/40 p-2 transition group-hover:border-[var(--gold)]">
                   <img src={c.image} alt={c.title} loading="lazy" className="h-full w-full rounded-full object-cover transition duration-700 group-hover:scale-105" />
