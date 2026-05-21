@@ -30,49 +30,65 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  --color-gold: var(--gold);
-  --color-gold-foreground: var(--gold-foreground);
+  --color-brown: var(--brown);
+  --color-brown-foreground: var(--brown-foreground);
+  --color-gold: var(--brown);
+  --color-gold-foreground: var(--brown-foreground);
   --color-blush: var(--blush);
   --font-serif: "Playfair Display", Georgia, serif;
   --font-sans: "Inter", system-ui, sans-serif;
-  --shadow-soft: 0 4px 20px -4px color-mix(in oklab, var(--primary) 12%, transparent);
-  --shadow-card: 0 10px 30px -12px color-mix(in oklab, var(--gold) 25%, transparent);
+  --shadow-soft: 0 8px 24px -8px color-mix(in oklab, var(--primary) 30%, transparent);
+  --shadow-card: 0 18px 40px -18px color-mix(in oklab, var(--brown) 35%, transparent);
+  --shadow-lift: 0 24px 60px -22px color-mix(in oklab, black 30%, transparent);
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-fade-in: fade-in 0.6s ease-out both;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
 }
 
 :root {
   --radius: 0.75rem;
-  --background: oklch(0.995 0.003 60);
-  --foreground: oklch(0.18 0.01 30);
+  /* Pure white background, black text */
+  --background: oklch(1 0 0);
+  --foreground: oklch(0.16 0 0);
   --card: oklch(1 0 0);
-  --card-foreground: oklch(0.18 0.01 30);
+  --card-foreground: oklch(0.16 0 0);
   --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.18 0.01 30);
-  /* Crimson/Deep Pink — from logo */
-  --primary: oklch(0.55 0.22 12);
-  --primary-foreground: oklch(0.99 0.005 60);
-  --secondary: oklch(0.96 0.015 60);
-  --secondary-foreground: oklch(0.25 0.02 30);
-  --muted: oklch(0.96 0.012 60);
-  --muted-foreground: oklch(0.45 0.02 30);
-  --accent: oklch(0.95 0.03 30);
-  --accent-foreground: oklch(0.25 0.02 30);
-  --destructive: oklch(0.55 0.22 12);
-  --destructive-foreground: oklch(0.99 0.005 60);
-  --border: oklch(0.92 0.012 60);
-  --input: oklch(0.92 0.012 60);
-  --ring: oklch(0.55 0.22 12);
-  /* Earthy gold/brown from wreath */
-  --gold: oklch(0.62 0.09 65);
-  --gold-foreground: oklch(0.99 0.005 60);
-  --blush: oklch(0.95 0.03 25);
-  --sidebar: oklch(0.99 0.005 60);
-  --sidebar-foreground: oklch(0.18 0.01 30);
-  --sidebar-primary: oklch(0.55 0.22 12);
-  --sidebar-primary-foreground: oklch(0.99 0.005 60);
-  --sidebar-accent: oklch(0.95 0.03 30);
-  --sidebar-accent-foreground: oklch(0.25 0.02 30);
-  --sidebar-border: oklch(0.92 0.012 60);
-  --sidebar-ring: oklch(0.55 0.22 12);
+  --popover-foreground: oklch(0.16 0 0);
+  /* Dark Pink primary */
+  --primary: oklch(0.52 0.21 358);
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.97 0.005 60);
+  --secondary-foreground: oklch(0.16 0 0);
+  --muted: oklch(0.96 0.005 60);
+  --muted-foreground: oklch(0.42 0.01 30);
+  --accent: oklch(0.96 0.02 20);
+  --accent-foreground: oklch(0.16 0 0);
+  --destructive: oklch(0.52 0.21 358);
+  --destructive-foreground: oklch(1 0 0);
+  --border: oklch(0.92 0.005 60);
+  --input: oklch(0.92 0.005 60);
+  --ring: oklch(0.52 0.21 358);
+  /* Warm Brown accent */
+  --brown: oklch(0.42 0.06 55);
+  --brown-foreground: oklch(0.99 0.005 60);
+  --blush: oklch(0.96 0.025 10);
+  --sidebar: oklch(1 0 0);
+  --sidebar-foreground: oklch(0.16 0 0);
+  --sidebar-primary: oklch(0.52 0.21 358);
+  --sidebar-primary-foreground: oklch(1 0 0);
+  --sidebar-accent: oklch(0.96 0.02 20);
+  --sidebar-accent-foreground: oklch(0.16 0 0);
+  --sidebar-border: oklch(0.92 0.005 60);
+  --sidebar-ring: oklch(0.52 0.21 358);
 }
 
 @layer base {
@@ -83,5 +99,10 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
   }
-  h1, h2, h3, h4 { font-family: var(--font-serif); letter-spacing: -0.01em; }
+  h1, h2, h3, h4 { font-family: var(--font-serif); letter-spacing: -0.015em; }
+}
+
+@layer utilities {
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s cubic-bezier(0.22,1,0.36,1), transform 0.8s cubic-bezier(0.22,1,0.36,1); }
+  .reveal.in { opacity: 1; transform: translateY(0); }
 }
