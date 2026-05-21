@@ -105,7 +105,7 @@ function Home() {
           <Link to="/shop" className="text-sm font-medium text-primary hover:underline">View all →</Link>
         </div>
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map((p) => <ProductCard key={p.id} product={p} />)}
+          {products.slice(0, 8).map((p) => <ProductCard key={p.id} product={p} />)}
         </div>
       </section>
 
