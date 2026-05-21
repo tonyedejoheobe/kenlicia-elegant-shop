@@ -2,7 +2,7 @@ import { Instagram, Facebook } from "lucide-react";
 
 export function Footer() {
   return (
-    <footer className="bg-[oklch(0.28_0.04_45)] text-[oklch(0.96_0.012_60)]">
+    <footer className="bg-[var(--brown)] text-[var(--brown-foreground)]">
       <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 md:grid-cols-4 lg:px-8">
         <div className="md:col-span-1">
           <h3 className="font-serif text-2xl text-[var(--gold)]">Kenliciaastetics</h3>

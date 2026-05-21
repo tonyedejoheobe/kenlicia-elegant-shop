@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
 import { cartStore, useCart } from "@/lib/cart-store";
 
@@ -15,9 +15,17 @@ export function Header() {
   const { items } = useCart();
   const count = items.reduce((s, i) => s + i.qty, 0);
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-40 w-full border-b border-border/60 bg-background/85 backdrop-blur-xl">
+    <header className={`sticky top-0 z-40 w-full bg-background/95 backdrop-blur-xl transition-shadow duration-300 ${scrolled ? "shadow-[0_4px_20px_-10px_rgba(0,0,0,0.18)] border-b border-border" : "border-b border-transparent"}`}>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-2">
           <img src={logo} alt="Kenliciaastetics" className="h-14 w-auto" />
