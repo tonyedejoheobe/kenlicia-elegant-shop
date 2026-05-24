@@ -3,6 +3,8 @@ import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
 import { cartStore, useCart } from "@/lib/cart-store";
+import { SearchOverlay } from "./SearchOverlay";
+import { ThemeToggle } from "./ThemeToggle";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -15,6 +17,7 @@ export function Header() {
   const { items } = useCart();
   const count = items.reduce((s, i) => s + i.qty, 0);
   const [open, setOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -25,6 +28,8 @@ export function Header() {
   }, []);
 
   return (
+    <>
+    <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     <header className={`sticky top-0 z-40 w-full bg-background/95 backdrop-blur-xl transition-shadow duration-300 ${scrolled ? "shadow-[0_4px_20px_-10px_rgba(0,0,0,0.18)] border-b border-border" : "border-b border-transparent"}`}>
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link to="/" className="flex items-center gap-2">
@@ -45,10 +50,15 @@ export function Header() {
         </nav>
 
         <div className="flex items-center gap-1">
-          <button aria-label="Search" className="rounded-full p-2.5 text-foreground/80 transition hover:bg-accent hover:text-primary">
+          <button
+            aria-label="Search"
+            onClick={() => setSearchOpen(true)}
+            className="rounded-full p-2.5 text-foreground/80 transition hover:bg-accent hover:text-primary"
+          >
             <Search className="h-5 w-5" />
           </button>
-          <button aria-label="Account" className="rounded-full p-2.5 text-foreground/80 transition hover:bg-accent hover:text-primary">
+          <ThemeToggle />
+          <button aria-label="Account" className="hidden rounded-full p-2.5 text-foreground/80 transition hover:bg-accent hover:text-primary sm:inline-flex">
             <User className="h-5 w-5" />
           </button>
           <button
@@ -90,5 +100,6 @@ export function Header() {
         </div>
       )}
     </header>
+    </>
   );
 }
