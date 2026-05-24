@@ -83,11 +83,11 @@ function Home() {
             <Sparkles className="h-3 w-3" /> Elegance in Everyworld
           </span>
           <h1 className="reveal mt-6 max-w-3xl font-serif text-5xl leading-[1.04] text-white sm:text-6xl lg:text-7xl">
-            Handcrafted{" "}
+            Where every detail{" "}
             <em className="not-italic">
-              <span className="bg-gradient-to-r from-[oklch(0.85_0.16_358)] via-[oklch(0.75_0.2_358)] to-[oklch(0.65_0.18_30)] bg-clip-text text-transparent">Elegance</span>
+              <span className="bg-gradient-to-r from-[oklch(0.85_0.16_358)] via-[oklch(0.75_0.2_358)] to-[oklch(0.65_0.18_30)] bg-clip-text text-transparent">whispers luxury</span>
             </em>
-            <br />for your everyday.
+            <br />and feels like you.
           </h1>
           <p className="reveal mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
             Crochet, facial care, signature oil perfumes & beauty essentials — lovingly handmade by Okekeni Alice Ede.
