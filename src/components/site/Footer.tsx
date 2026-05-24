@@ -8,7 +8,7 @@ export function Footer() {
           <h3 className="font-serif text-2xl text-[var(--gold)]">Kenliciaastetics</h3>
           <p className="mt-3 text-sm italic opacity-80">Elegance in Everyworld</p>
           <p className="mt-4 text-sm leading-relaxed opacity-70">
-            Bespoke crochet and beadwork, handcrafted with love by Okekeni Alice Ede.
+            Crochet, facial care, oil perfumes & beauty — handcrafted with love by Okekeni Alice Ede.
           </p>
         </div>
 
