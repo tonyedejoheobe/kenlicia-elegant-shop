@@ -1,130 +1,101 @@
-# Cloudflare Pages Deployment Guide
+# Cloudflare Workers Deployment Guide
 
-This project is configured for easy deployment to **Cloudflare Pages**.
+This project is configured for **Cloudflare Workers** (with Pages integration) for easy deployment with full server-side rendering support.
 
 ## Prerequisites
 
 1. **Cloudflare Account** - Sign up at https://dash.cloudflare.com
 2. **Wrangler CLI** - Already configured in your project
-3. **GitHub Account** - Your repository should be pushed to GitHub
 
-## Option 1: Automatic Deployment (Recommended - CI/CD)
+## Option 1: Deploy via GitHub (Recommended - Automatic)
 
-### Setup GitHub Integration:
+### Setup with Cloudflare Pages + Workers:
 
 1. Go to [Cloudflare Dashboard](https://dash.cloudflare.com)
-2. Navigate to **Pages**
-3. Click **Create a project** → **Connect to Git**
-4. Authorize GitHub and select your `kenlicia-elegant-shop` repository
-5. Configure build settings:
-   - **Framework preset**: Leave as "None" (it will auto-detect)
+2. Navigate to **Pages** → **Create a project**
+3. Connect your GitHub repository
+4. Build settings:
    - **Build command**: `npm run build`
    - **Build output directory**: `dist/client`
-   - **Environment variables**: Add any needed (e.g., `SUPABASE_URL`, `SUPABASE_ANON_KEY`)
+5. Set environment variables if needed (Supabase, etc.)
+6. **Deploy**
 
-6. Click **Deploy**
-7. Every time you push to `main` branch, it will automatically deploy!
+Every push to `main` will auto-deploy!
 
-## Option 2: Manual Deployment (One-time)
-
-### Using Wrangler CLI:
+## Option 2: Quick Manual Deployment (One Command)
 
 ```bash
-# Install Wrangler globally (if not already installed)
+# Install Wrangler globally
 npm install -g wrangler
 
+# Authenticate with Cloudflare
+wrangler login
+
+# Build and deploy
+npm run build
+wrangler deploy
+```
+
+That's it! Your site is live at `https://kenlicia-elegant-shop.pages.dev` ✅
+
+## Option 3: Deploy Just the Built Files
+
+```bash
 # Build the project
 npm run build
 
-# Deploy to Cloudflare Pages
-wrangler pages deploy dist/client
-```
-
-Follow the prompts:
-- Select or create a project name
-- Confirm the `dist/client` directory
-- Done! Your site is live
-
-## Option 3: Using GitHub Actions (Advanced)
-
-Create `.github/workflows/deploy.yml`:
-
-```yaml
-name: Deploy to Cloudflare Pages
-
-on:
-  push:
-    branches: [main]
-
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      deployments: write
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: "20"
-      
-      - run: npm install
-      - run: npm run build
-      
-      - name: Deploy to Cloudflare Pages
-        uses: cloudflare/pages-action@v1
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: kenlicia-elegant-shop
-          directory: dist/client
-          productionBranch: main
+# Deploy the server to Cloudflare Workers
+wrangler deploy --name kenlicia-elegant-shop
 ```
 
 ## Environment Variables
 
-If your project uses environment variables (Supabase, API keys, etc.):
+If you need environment variables (Supabase, API keys, etc.):
 
-### In Cloudflare Pages Dashboard:
-1. Go to your Pages project
+### Via Wrangler CLI:
+```bash
+wrangler secret put SUPABASE_URL
+wrangler secret put SUPABASE_ANON_KEY
+```
+
+### Or in Cloudflare Dashboard:
+1. Workers & Pages → Your project
 2. **Settings** → **Environment variables**
-3. Add your variables for both **Production** and **Preview** environments
+3. Add your variables
 
-Example:
-```
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your-anon-key
-```
+## How It Works
 
-## Configuration Files
-
-- **wrangler.jsonc** - Cloudflare Workers configuration (already set up)
-- **package.json** - Build scripts are configured
-- **vite.config.ts** - Uses `@lovable.dev/vite-tanstack-config`
-
-## Troubleshooting
-
-**Issue: Build fails**
-- Check that `npm run build` works locally
-- Verify Node.js version is 20+
-- Check environment variables are set
-
-**Issue: Routes not working (404 errors)**
-- Ensure `dist/client` is the output directory
-- Pages will automatically handle client-side routing
-
-**Issue: Server-side rendering not working**
-- Cloudflare Pages automatically handles SSR through the built dist/server code
-- No additional setup needed
+- **`src/server.ts`** - Handles requests on Cloudflare Workers
+- **`dist/client/`** - Static assets (CSS, JS, images)
+- **`dist/server/`** - Compiled server code
+- **`wrangler.jsonc`** - Configuration for Workers deployment
 
 ## Custom Domain
 
-1. In Cloudflare Pages project **Settings**
-2. **Custom domains** → **Set up a custom domain**
-3. Follow Cloudflare's instructions to point your domain
+1. Go to your Cloudflare Pages project
+2. **Settings** → **Custom domains**
+3. Add your domain (e.g., `kenlicia.com`)
+4. Point your domain's nameservers to Cloudflare
 
-## Support
+## Troubleshooting
 
-- [Cloudflare Pages Docs](https://developers.cloudflare.com/pages/)
-- [Wrangler Documentation](https://developers.cloudflare.com/workers/wrangler/)
-- [TanStack Start Docs](https://tanstack.com/start/latest)
+**Still getting 404?**
+- Run: `wrangler deploy` (full rebuild and deploy)
+- Check console: `wrangler tail` (see live logs)
+
+**Want to see deployment logs?**
+```bash
+wrangler tail
+```
+
+**Deploy just the client files to Pages:**
+```bash
+wrangler pages deploy dist/client
+```
+
+## Resources
+
+- [Wrangler Docs](https://developers.cloudflare.com/workers/wrangler/)
+- [Cloudflare Workers](https://developers.cloudflare.com/workers/)
+- [Cloudflare Pages](https://developers.cloudflare.com/pages/)
+- [TanStack Start](https://tanstack.com/start/latest)
