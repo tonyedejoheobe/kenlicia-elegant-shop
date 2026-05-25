@@ -9,6 +9,7 @@ import {
 } from "@tanstack/react-router";
 
 import appCss from "../styles.css?url";
+import logo from "../assets/logo.png";
 
 function NotFoundComponent() {
   return (
@@ -72,17 +73,16 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
       { title: "Kenliciaastetics — Elegance in Everyworld" },
       { name: "description", content: "Handcrafted crochet & bespoke beadwork by Okekeni Alice Ede." },
+      { name: "author", content: "Okekeni Alice Ede" },
+      { property: "og:title", content: "Kenliciaastetics — Elegance in Everyworld" },
+      { property: "og:description", content: "Handcrafted crochet & bespoke beadwork by Okekeni Alice Ede." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
+      { rel: "icon", href: logo, type: "image/png" },
       { rel: "stylesheet", href: appCss },
       { rel: "preconnect", href: "https://fonts.googleapis.com" },
       { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
