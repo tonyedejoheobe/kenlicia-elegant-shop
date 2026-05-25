@@ -11,11 +11,7 @@ import perfume from "@/assets/product-perfume.jpg";
 import nails from "@/assets/product-nails.jpg";
 import lashes from "@/assets/product-lashes.jpg";
 
-export type Category =
-  | "Crochet & Accessories"
-  | "Facial Care"
-  | "Scents"
-  | "Beauty";
+export type Category = "Crochet & Accessories" | "Facial Care" | "Scents" | "Beauty";
 
 export type Product = {
   id: string;
@@ -25,25 +21,68 @@ export type Product = {
   category: Category;
 };
 
-export const categories: Category[] = [
-  "Crochet & Accessories",
-  "Facial Care",
-  "Scents",
-  "Beauty",
-];
+export const categories: Category[] = ["Crochet & Accessories", "Facial Care", "Scents", "Beauty"];
 
 export const products: Product[] = [
   // Crochet & Accessories
-  { id: "cr1", title: "Handwoven Crochet Tote", price: 89, image: p1, category: "Crochet & Accessories" },
-  { id: "cr2", title: "Blush Crochet Blouse", price: 120, image: p3, category: "Crochet & Accessories" },
-  { id: "cr3", title: "Crochet Scrunchie Set", price: 18, image: scrunchie, category: "Crochet & Accessories" },
-  { id: "cr4", title: "Tortoise Claw Clip", price: 14, image: clawclip, category: "Crochet & Accessories" },
-  { id: "cr5", title: "Pearl Beaded Necklace", price: 64, image: p2, category: "Crochet & Accessories" },
-  { id: "cr6", title: "Gilded Pearl Bracelet", price: 48, image: p4, category: "Crochet & Accessories" },
+  {
+    id: "cr1",
+    title: "Handwoven Crochet Tote",
+    price: 89,
+    image: p1,
+    category: "Crochet & Accessories",
+  },
+  {
+    id: "cr2",
+    title: "Blush Crochet Blouse",
+    price: 120,
+    image: p3,
+    category: "Crochet & Accessories",
+  },
+  {
+    id: "cr3",
+    title: "Crochet Scrunchie Set",
+    price: 18,
+    image: scrunchie,
+    category: "Crochet & Accessories",
+  },
+  {
+    id: "cr4",
+    title: "Tortoise Claw Clip",
+    price: 14,
+    image: clawclip,
+    category: "Crochet & Accessories",
+  },
+  {
+    id: "cr5",
+    title: "Pearl Beaded Necklace",
+    price: 64,
+    image: p2,
+    category: "Crochet & Accessories",
+  },
+  {
+    id: "cr6",
+    title: "Gilded Pearl Bracelet",
+    price: 48,
+    image: p4,
+    category: "Crochet & Accessories",
+  },
 
   // Facial Care — Kenlicias' Facial care
-  { id: "fc1", title: "Hydrating Rose Face Mask", price: 22, image: facemask, category: "Facial Care" },
-  { id: "fc2", title: "Signature Lip Gloss Combo", price: 24, image: lipgloss, category: "Facial Care" },
+  {
+    id: "fc1",
+    title: "Hydrating Rose Face Mask",
+    price: 22,
+    image: facemask,
+    category: "Facial Care",
+  },
+  {
+    id: "fc2",
+    title: "Signature Lip Gloss Combo",
+    price: 24,
+    image: lipgloss,
+    category: "Facial Care",
+  },
   { id: "fc3", title: "Velvet Lipstick Trio", price: 32, image: lipstick, category: "Facial Care" },
   { id: "fc4", title: "Sugar Lip Scrub", price: 16, image: facemask, category: "Facial Care" },
   { id: "fc5", title: "Soothing Eye Mask", price: 18, image: facemask, category: "Facial Care" },

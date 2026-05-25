@@ -19,7 +19,14 @@ export function ProductCard({ product }: { product: Product }) {
         <h3 className="font-serif text-lg leading-snug">{product.title}</h3>
         <p className="mt-1 text-base text-[var(--gold)]">${product.price}</p>
         <button
-          onClick={() => cartStore.add({ id: product.id, title: product.title, price: product.price, image: product.image })}
+          onClick={() =>
+            cartStore.add({
+              id: product.id,
+              title: product.title,
+              price: product.price,
+              image: product.image,
+            })
+          }
           className="mt-4 w-full rounded-full bg-primary py-3 text-xs font-semibold uppercase tracking-widest text-primary-foreground opacity-90 transition hover:opacity-100 group-hover:opacity-100 md:opacity-0"
         >
           Add to Cart

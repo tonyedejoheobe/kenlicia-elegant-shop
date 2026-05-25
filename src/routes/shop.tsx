@@ -3,16 +3,28 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Layout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
-import { products as staticProducts, categories, type Category, type Product } from "@/data/products";
+import {
+  products as staticProducts,
+  categories,
+  type Category,
+  type Product,
+} from "@/data/products";
 import { fetchProducts } from "@/lib/products-db";
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
     meta: [
       { title: "Shop — Kenliciaastetics" },
-      { name: "description", content: "Browse handmade crochet, facial care, oil perfumes and beauty essentials by Kenliciaastetics." },
+      {
+        name: "description",
+        content:
+          "Browse handmade crochet, facial care, oil perfumes and beauty essentials by Kenliciaastetics.",
+      },
       { property: "og:title", content: "Shop — Kenliciaastetics" },
-      { property: "og:description", content: "Crochet, facial care, scents, and beauty — all handcrafted with love." },
+      {
+        property: "og:description",
+        content: "Crochet, facial care, scents, and beauty — all handcrafted with love.",
+      },
     ],
   }),
   component: Shop,
@@ -45,7 +57,9 @@ function Shop() {
   return (
     <Layout>
       <section className="border-b border-border bg-[var(--blush)]/30 py-16 text-center md:py-24">
-        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">The Collection</p>
+        <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
+          The Collection
+        </p>
         <h1 className="mt-3 font-serif text-5xl sm:text-6xl">Shop Kenliciaastetics</h1>
         <p className="mx-auto mt-4 max-w-xl px-4 text-muted-foreground">
           Crochet, facial care, scents, and beauty — each piece handcrafted with love.
@@ -70,7 +84,9 @@ function Shop() {
         </div>
 
         <div className="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-          {filtered.map((p) => <ProductCard key={p.id} product={p} />)}
+          {filtered.map((p) => (
+            <ProductCard key={p.id} product={p} />
+          ))}
         </div>
         {filtered.length === 0 && (
           <p className="mt-12 text-center text-muted-foreground">No items in this category yet.</p>

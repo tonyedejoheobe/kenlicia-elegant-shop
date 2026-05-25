@@ -23,7 +23,7 @@ function AuthPage() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    
+
     if (!email.trim() || !password.trim()) {
       setError("Email and password are required");
       return;
@@ -32,7 +32,7 @@ function AuthPage() {
       setError("Password must be at least 6 characters");
       return;
     }
-    
+
     setError(null);
     setLoading(true);
     try {
@@ -62,14 +62,18 @@ function AuthPage() {
   return (
     <Layout>
       <section className="mx-auto flex min-h-[70vh] max-w-md flex-col justify-center px-4 py-16">
-        <h1 className="font-serif text-4xl">{mode === "signin" ? "Welcome back" : "Create account"}</h1>
+        <h1 className="font-serif text-4xl">
+          {mode === "signin" ? "Welcome back" : "Create account"}
+        </h1>
         <p className="mt-2 text-sm text-muted-foreground">
           {mode === "signin" ? "Sign in to manage the store." : "New here? Set up your account."}
         </p>
 
         <form onSubmit={submit} className="mt-8 space-y-4">
           <div>
-            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">Email</label>
+            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">
+              Email
+            </label>
             <input
               type="email"
               required
@@ -79,7 +83,9 @@ function AuthPage() {
             />
           </div>
           <div>
-            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">Password</label>
+            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">
+              Password
+            </label>
             <input
               type="password"
               required
@@ -108,7 +114,10 @@ function AuthPage() {
           {mode === "signin" ? "Need an account? Sign up" : "Have an account? Sign in"}
         </button>
 
-        <Link to="/" className="mt-8 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary">
+        <Link
+          to="/"
+          className="mt-8 text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
+        >
           ← Back to store
         </Link>
       </section>

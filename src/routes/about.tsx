@@ -24,24 +24,28 @@ function About() {
           </div>
         </div>
         <div className="md:col-span-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">Our Story</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
+            Our Story
+          </p>
           <h1 className="mt-3 font-serif text-5xl leading-tight sm:text-6xl">
             A studio rooted in <em className="not-italic text-primary">love</em> and patience.
           </h1>
           <div className="mt-8 space-y-5 text-lg leading-relaxed text-muted-foreground">
             <p>
-              Kenliciaastetics began as a quiet ritual — Okekeni Alice Ede sitting with thread, hook,
-              and a constellation of beads, dreaming up pieces that carry weight and warmth.
+              Kenliciaastetics began as a quiet ritual — Okekeni Alice Ede sitting with thread,
+              hook, and a constellation of beads, dreaming up pieces that carry weight and warmth.
             </p>
             <p>
               Today, the atelier has grown into four signature worlds: handwoven{" "}
               <span className="text-primary">Crochet & Accessories</span>, soft-glow{" "}
               <span className="text-primary">Facial Care</span>, hand-blended{" "}
               <span className="text-primary">Oil Perfumes</span>, and a full{" "}
-              <span className="text-primary">Beauty</span> line of press-on nails, mink lashes, brows and braids.
+              <span className="text-primary">Beauty</span> line of press-on nails, mink lashes,
+              brows and braids.
             </p>
             <p>
-              Every order leaves with the same intention: to bring elegance, softness, and meaning into your everyday world.
+              Every order leaves with the same intention: to bring elegance, softness, and meaning
+              into your everyday world.
             </p>
             <p className="font-serif text-2xl italic text-primary">"Elegance in Everyworld."</p>
           </div>

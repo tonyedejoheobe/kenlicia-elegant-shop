@@ -16,19 +16,46 @@ export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Kenliciaastetics — Elegance in Everyworld" },
-      { name: "description", content: "Premium handmade crochet, facial care, oil perfumes & beauty essentials by Okekeni Alice Ede." },
+      {
+        name: "description",
+        content:
+          "Premium handmade crochet, facial care, oil perfumes & beauty essentials by Okekeni Alice Ede.",
+      },
       { property: "og:title", content: "Kenliciaastetics — Elegance in Everyworld" },
-      { property: "og:description", content: "Crochet, facial care, scents and beauty — handcrafted with love." },
+      {
+        property: "og:description",
+        content: "Crochet, facial care, scents and beauty — handcrafted with love.",
+      },
     ],
   }),
   component: Home,
 });
 
 const categoryCards: { title: Category; image: string; desc: string; tag: string }[] = [
-  { title: "Crochet & Accessories", image: catAccessories, desc: "Scrunchies, claw clips, totes & beadwork — woven by hand.", tag: "Handwoven" },
-  { title: "Facial Care", image: catFacial, desc: "Face masks, lip gloss, scrubs & balms for soft, radiant skin.", tag: "Glow" },
-  { title: "Scents", image: catScents, desc: "Signature oil perfumes — Amber, Rose Musk & Vanilla Bloom.", tag: "Aromatic" },
-  { title: "Beauty", image: catBeauty, desc: "Press-on nails, mink lashes, brow kits & braid bookings.", tag: "Flawless" },
+  {
+    title: "Crochet & Accessories",
+    image: catAccessories,
+    desc: "Scrunchies, claw clips, totes & beadwork — woven by hand.",
+    tag: "Handwoven",
+  },
+  {
+    title: "Facial Care",
+    image: catFacial,
+    desc: "Face masks, lip gloss, scrubs & balms for soft, radiant skin.",
+    tag: "Glow",
+  },
+  {
+    title: "Scents",
+    image: catScents,
+    desc: "Signature oil perfumes — Amber, Rose Musk & Vanilla Bloom.",
+    tag: "Aromatic",
+  },
+  {
+    title: "Beauty",
+    image: catBeauty,
+    desc: "Press-on nails, mink lashes, brow kits & braid bookings.",
+    tag: "Flawless",
+  },
 ];
 
 const perks = [
@@ -39,8 +66,14 @@ const perks = [
 ];
 
 const tickerWords = [
-  "Crochet", "Facial Care", "Oil Perfumes", "Mink Lashes",
-  "Press-on Nails", "Lip Combos", "Beadwork", "Custom Braids",
+  "Crochet",
+  "Facial Care",
+  "Oil Perfumes",
+  "Mink Lashes",
+  "Press-on Nails",
+  "Lip Combos",
+  "Beadwork",
+  "Custom Braids",
 ];
 
 function Home() {
@@ -85,12 +118,16 @@ function Home() {
           <h1 className="reveal mt-6 max-w-3xl font-serif text-5xl leading-[1.04] text-white sm:text-6xl lg:text-7xl">
             Where every detail{" "}
             <em className="not-italic">
-              <span className="bg-gradient-to-r from-[oklch(0.85_0.16_358)] via-[oklch(0.75_0.2_358)] to-[oklch(0.65_0.18_30)] bg-clip-text text-transparent">whispers luxury</span>
+              <span className="bg-gradient-to-r from-[oklch(0.85_0.16_358)] via-[oklch(0.75_0.2_358)] to-[oklch(0.65_0.18_30)] bg-clip-text text-transparent">
+                whispers luxury
+              </span>
             </em>
-            <br />and feels like you.
+            <br />
+            and feels like you.
           </h1>
           <p className="reveal mt-6 max-w-xl text-base leading-relaxed text-white/85 sm:text-lg">
-            Crochet, facial care, signature oil perfumes & beauty essentials — lovingly handmade by Okekeni Alice Ede.
+            Crochet, facial care, signature oil perfumes & beauty essentials — lovingly handmade by
+            Okekeni Alice Ede.
           </p>
           <div className="reveal mt-9 flex flex-wrap items-center gap-4">
             <Link
@@ -100,7 +137,10 @@ function Home() {
               Shop the Collection
               <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
             </Link>
-            <Link to="/about" className="text-sm font-medium text-white underline-offset-4 hover:underline">
+            <Link
+              to="/about"
+              className="text-sm font-medium text-white underline-offset-4 hover:underline"
+            >
               Meet the Artisan →
             </Link>
           </div>
@@ -117,7 +157,10 @@ function Home() {
       <div className="overflow-hidden border-y border-border bg-[var(--brown)] py-4 text-[var(--brown-foreground)]">
         <div className="flex w-max gap-12 [animation:var(--animate-marquee)] whitespace-nowrap">
           {[...tickerWords, ...tickerWords].map((w, i) => (
-            <span key={i} className="flex items-center gap-12 font-serif text-2xl italic tracking-wide">
+            <span
+              key={i}
+              className="flex items-center gap-12 font-serif text-2xl italic tracking-wide"
+            >
               {w}
               <Sparkles className="h-4 w-4 opacity-70" />
             </span>
@@ -129,7 +172,11 @@ function Home() {
       <section className="border-b border-border py-14">
         <div className="mx-auto grid max-w-7xl gap-8 px-4 sm:grid-cols-2 sm:px-6 lg:grid-cols-4 lg:px-8">
           {perks.map((p, i) => (
-            <div key={p.title} className="reveal flex items-start gap-4" style={{ transitionDelay: `${i * 80}ms` }}>
+            <div
+              key={p.title}
+              className="reveal flex items-start gap-4"
+              style={{ transitionDelay: `${i * 80}ms` }}
+            >
               <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[var(--blush)] text-primary">
                 <p.icon className="h-5 w-5" />
               </div>
@@ -146,10 +193,15 @@ function Home() {
       <section className="py-20 md:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="reveal mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--brown)]">Our Universe</p>
-            <h2 className="mt-3 font-serif text-4xl text-foreground sm:text-5xl">Four signature lines</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--brown)]">
+              Our Universe
+            </p>
+            <h2 className="mt-3 font-serif text-4xl text-foreground sm:text-5xl">
+              Four signature lines
+            </h2>
             <p className="mt-4 text-muted-foreground">
-              From handwoven crochet to soft glow facials, scents and beauty — everything we make under one roof.
+              From handwoven crochet to soft glow facials, scents and beauty — everything we make
+              under one roof.
             </p>
           </div>
 
@@ -191,10 +243,14 @@ function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="reveal flex flex-wrap items-end justify-between gap-6">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--brown)]">Curated for you</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--brown)]">
+                Curated for you
+              </p>
               <h2 className="mt-3 font-serif text-4xl text-foreground sm:text-5xl">Shop by mood</h2>
             </div>
-            <Link to="/shop" className="text-sm font-medium text-primary hover:underline">View all →</Link>
+            <Link to="/shop" className="text-sm font-medium text-primary hover:underline">
+              View all →
+            </Link>
           </div>
 
           <div className="reveal mt-8 flex flex-wrap gap-2">
@@ -233,13 +289,17 @@ function Home() {
         <div className="pointer-events-none absolute -right-20 bottom-0 h-80 w-80 rounded-full bg-[var(--blush)]/20 blur-3xl [animation:var(--animate-float)] [animation-delay:-2s]" />
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
           <div className="reveal">
-            <p className="text-xs font-semibold uppercase tracking-[0.3em] opacity-80">Kenlicias' Scents</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] opacity-80">
+              Kenlicias' Scents
+            </p>
             <h2 className="mt-3 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">
-              An oil perfume<br />
+              An oil perfume
+              <br />
               <em className="not-italic text-[oklch(0.88_0.06_30)]">that lingers softly.</em>
             </h2>
             <p className="mt-6 max-w-lg text-base opacity-85">
-              Amber Oil. Rose Musk × Idaras. Vanilla Bloom. Long-lasting, alcohol-free, hand-blended in small batches.
+              Amber Oil. Rose Musk × Idaras. Vanilla Bloom. Long-lasting, alcohol-free, hand-blended
+              in small batches.
             </p>
             <Link
               to="/shop"
@@ -262,7 +322,12 @@ function Home() {
         <div className="mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 md:grid-cols-2 lg:px-8">
           <div className="reveal relative">
             <div className="overflow-hidden rounded-[2rem] border border-[var(--brown)]/20 shadow-[var(--shadow-card)]">
-              <img src={founder} alt="Okekeni Alice Ede" loading="lazy" className="h-full w-full object-cover transition duration-[1200ms] hover:scale-105" />
+              <img
+                src={founder}
+                alt="Okekeni Alice Ede"
+                loading="lazy"
+                className="h-full w-full object-cover transition duration-[1200ms] hover:scale-105"
+              />
             </div>
             <div className="absolute -right-4 -top-4 hidden h-24 w-24 rounded-full border-2 border-[var(--brown)] bg-background md:flex md:flex-col md:items-center md:justify-center [animation:var(--animate-float)]">
               <span className="font-serif text-2xl text-primary">Est.</span>
@@ -270,23 +335,28 @@ function Home() {
             </div>
           </div>
           <div className="reveal">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--brown)]">Meet the Artisan</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--brown)]">
+              Meet the Artisan
+            </p>
             <h2 className="mt-3 font-serif text-4xl leading-tight text-foreground sm:text-5xl">
               Okekeni Alice Ede
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-muted-foreground">
-              The visionary behind Kenliciaastetics — a one-woman atelier where crochet, facial care, oil perfumes and beauty
-              come together under one philosophy: <em className="not-italic text-primary">"Elegance in Everyworld."</em>
+              The visionary behind Kenliciaastetics — a one-woman atelier where crochet, facial
+              care, oil perfumes and beauty come together under one philosophy:{" "}
+              <em className="not-italic text-primary">"Elegance in Everyworld."</em>
             </p>
             <p className="mt-4 leading-relaxed text-muted-foreground">
-              From hand-woven scrunchies to silky lip combos and signature scents, every piece leaves the studio with
-              patience, intention, and a little bit of love.
+              From hand-woven scrunchies to silky lip combos and signature scents, every piece
+              leaves the studio with patience, intention, and a little bit of love.
             </p>
 
             <div className="mt-8 grid grid-cols-3 gap-4 border-t border-border pt-6">
               <div>
                 <p className="font-serif text-3xl text-primary">4+</p>
-                <p className="text-xs uppercase tracking-widest text-muted-foreground">Product Lines</p>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Product Lines
+                </p>
               </div>
               <div>
                 <p className="font-serif text-3xl text-primary">100%</p>
@@ -294,11 +364,16 @@ function Home() {
               </div>
               <div>
                 <p className="font-serif text-3xl text-primary">∞</p>
-                <p className="text-xs uppercase tracking-widest text-muted-foreground">Custom Orders</p>
+                <p className="text-xs uppercase tracking-widest text-muted-foreground">
+                  Custom Orders
+                </p>
               </div>
             </div>
 
-            <Link to="/about" className="mt-8 inline-flex items-center gap-2 rounded-full border border-foreground px-7 py-3.5 text-xs font-semibold uppercase tracking-widest transition hover:bg-foreground hover:text-background">
+            <Link
+              to="/about"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border border-foreground px-7 py-3.5 text-xs font-semibold uppercase tracking-widest transition hover:bg-foreground hover:text-background"
+            >
               Our Story <ArrowRight className="h-4 w-4" />
             </Link>
           </div>
@@ -309,14 +384,30 @@ function Home() {
       <section className="border-t border-border bg-[var(--blush)]/40 py-20 md:py-24">
         <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
           <div className="reveal text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--brown)]">Kind Words</p>
-            <h2 className="mt-3 font-serif text-4xl text-foreground sm:text-5xl">Loved by her girls</h2>
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-[var(--brown)]">
+              Kind Words
+            </p>
+            <h2 className="mt-3 font-serif text-4xl text-foreground sm:text-5xl">
+              Loved by her girls
+            </h2>
           </div>
           <div className="mt-12 grid gap-6 md:grid-cols-3">
             {[
-              { quote: "My scrunchies are SO soft and the lip gloss is everything. Alice's energy is in every piece.", name: "Ada O." },
-              { quote: "The Amber oil perfume is my new signature. People literally stop me to ask what I'm wearing.", name: "Chiamaka E." },
-              { quote: "Got the press-on nails AND the brow kit — flawless. Kenliciaastetics never misses.", name: "Tomi A." },
+              {
+                quote:
+                  "My scrunchies are SO soft and the lip gloss is everything. Alice's energy is in every piece.",
+                name: "Ada O.",
+              },
+              {
+                quote:
+                  "The Amber oil perfume is my new signature. People literally stop me to ask what I'm wearing.",
+                name: "Chiamaka E.",
+              },
+              {
+                quote:
+                  "Got the press-on nails AND the brow kit — flawless. Kenliciaastetics never misses.",
+                name: "Tomi A.",
+              },
             ].map((t, i) => (
               <figure
                 key={t.name}

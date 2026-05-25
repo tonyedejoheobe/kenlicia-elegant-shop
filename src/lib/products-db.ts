@@ -27,8 +27,16 @@ export async function createProduct(input: Omit<DbProduct, "id" | "created_at" |
   return data as DbProduct;
 }
 
-export async function updateProduct(id: string, input: Partial<Omit<DbProduct, "id" | "created_at" | "updated_at">>) {
-  const { data, error } = await supabase.from("products").update(input).eq("id", id).select().single();
+export async function updateProduct(
+  id: string,
+  input: Partial<Omit<DbProduct, "id" | "created_at" | "updated_at">>,
+) {
+  const { data, error } = await supabase
+    .from("products")
+    .update(input)
+    .eq("id", id)
+    .select()
+    .single();
   if (error) throw error;
   return data as DbProduct;
 }

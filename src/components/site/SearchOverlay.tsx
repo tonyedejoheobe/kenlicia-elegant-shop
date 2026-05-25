@@ -23,9 +23,7 @@ export function SearchOverlay({ open, onClose }: { open: boolean; onClose: () =>
     if (!term) return [];
     return products
       .filter(
-        (p) =>
-          p.title.toLowerCase().includes(term) ||
-          p.category.toLowerCase().includes(term)
+        (p) => p.title.toLowerCase().includes(term) || p.category.toLowerCase().includes(term),
       )
       .slice(0, 6);
   }, [q]);

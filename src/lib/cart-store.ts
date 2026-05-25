@@ -13,9 +13,16 @@ const emit = () => {
 };
 
 export const cartStore = {
-  subscribe(l: () => void) { listeners.add(l); return () => listeners.delete(l); },
-  getSnapshot() { return snapshot; },
-  getServerSnapshot() { return serverSnapshot; },
+  subscribe(l: () => void) {
+    listeners.add(l);
+    return () => listeners.delete(l);
+  },
+  getSnapshot() {
+    return snapshot;
+  },
+  getServerSnapshot() {
+    return serverSnapshot;
+  },
   add(item: Omit<CartItem, "qty">) {
     const existing = items.find((i) => i.id === item.id);
     items = existing
@@ -24,15 +31,31 @@ export const cartStore = {
     drawerOpen = true;
     emit();
   },
-  remove(id: string) { items = items.filter((i) => i.id !== id); emit(); },
-  setQty(id: string, qty: number) {
-    items = qty <= 0 ? items.filter((i) => i.id !== id) : items.map((i) => (i.id === id ? { ...i, qty } : i));
+  remove(id: string) {
+    items = items.filter((i) => i.id !== id);
     emit();
   },
-  openDrawer() { drawerOpen = true; emit(); },
-  closeDrawer() { drawerOpen = false; emit(); },
+  setQty(id: string, qty: number) {
+    items =
+      qty <= 0
+        ? items.filter((i) => i.id !== id)
+        : items.map((i) => (i.id === id ? { ...i, qty } : i));
+    emit();
+  },
+  openDrawer() {
+    drawerOpen = true;
+    emit();
+  },
+  closeDrawer() {
+    drawerOpen = false;
+    emit();
+  },
 };
 
 export function useCart() {
-  return useSyncExternalStore(cartStore.subscribe, cartStore.getSnapshot, cartStore.getServerSnapshot);
+  return useSyncExternalStore(
+    cartStore.subscribe,
+    cartStore.getSnapshot,
+    cartStore.getServerSnapshot,
+  );
 }

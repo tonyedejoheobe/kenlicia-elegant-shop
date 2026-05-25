@@ -19,14 +19,25 @@ export function useAuth() {
       }
     });
 
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setUser(data.session?.user ?? null);
-      if (data.session?.user) checkAdmin(data.session.user.id);
-      setLoading(false);
-    });
+    supabase.auth
+      .getSession()
+      .then(({ data }) => {
+        setSession(data.session);
+        setUser(data.session?.user ?? null);
+        if (data.session?.user) checkAdmin(data.session.user.id);
+      })
+      .catch((err) => {
+        console.error("Failed to get Supabase session:", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
 
-    return () => sub.subscription.unsubscribe();
+    return () => {
+      if (sub?.subscription) {
+        sub.subscription.unsubscribe();
+      }
+    };
   }, []);
 
   async function checkAdmin(userId: string) {

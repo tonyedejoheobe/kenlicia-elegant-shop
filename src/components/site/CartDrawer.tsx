@@ -8,7 +8,9 @@ export function CartDrawer() {
 
   useEffect(() => {
     document.body.style.overflow = drawerOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [drawerOpen]);
 
   return (
@@ -22,7 +24,11 @@ export function CartDrawer() {
       >
         <div className="flex items-center justify-between border-b border-border px-6 py-5">
           <h3 className="font-serif text-xl">Your Cart</h3>
-          <button onClick={() => cartStore.closeDrawer()} aria-label="Close" className="rounded-full p-2 hover:bg-accent">
+          <button
+            onClick={() => cartStore.closeDrawer()}
+            aria-label="Close"
+            className="rounded-full p-2 hover:bg-accent"
+          >
             <X className="h-5 w-5" />
           </button>
         </div>
@@ -41,15 +47,29 @@ export function CartDrawer() {
                   <div className="flex flex-1 flex-col">
                     <div className="flex justify-between gap-2">
                       <p className="font-medium leading-snug">{i.title}</p>
-                      <button onClick={() => cartStore.remove(i.id)} aria-label="Remove" className="text-muted-foreground hover:text-primary">
+                      <button
+                        onClick={() => cartStore.remove(i.id)}
+                        aria-label="Remove"
+                        className="text-muted-foreground hover:text-primary"
+                      >
                         <Trash2 className="h-4 w-4" />
                       </button>
                     </div>
                     <p className="mt-1 text-sm text-[var(--gold)]">${i.price}</p>
                     <div className="mt-auto flex items-center gap-2">
-                      <button onClick={() => cartStore.setQty(i.id, i.qty - 1)} className="rounded-full border border-border p-1 hover:border-primary hover:text-primary"><Minus className="h-3 w-3" /></button>
+                      <button
+                        onClick={() => cartStore.setQty(i.id, i.qty - 1)}
+                        className="rounded-full border border-border p-1 hover:border-primary hover:text-primary"
+                      >
+                        <Minus className="h-3 w-3" />
+                      </button>
                       <span className="w-6 text-center text-sm">{i.qty}</span>
-                      <button onClick={() => cartStore.setQty(i.id, i.qty + 1)} className="rounded-full border border-border p-1 hover:border-primary hover:text-primary"><Plus className="h-3 w-3" /></button>
+                      <button
+                        onClick={() => cartStore.setQty(i.id, i.qty + 1)}
+                        className="rounded-full border border-border p-1 hover:border-primary hover:text-primary"
+                      >
+                        <Plus className="h-3 w-3" />
+                      </button>
                     </div>
                   </div>
                 </li>
@@ -67,7 +87,9 @@ export function CartDrawer() {
             <button className="mt-4 w-full rounded-full bg-primary py-3.5 text-sm font-semibold uppercase tracking-wider text-primary-foreground transition hover:opacity-90">
               Checkout
             </button>
-            <p className="mt-2 text-center text-xs text-muted-foreground">Shipping & taxes calculated at checkout.</p>
+            <p className="mt-2 text-center text-xs text-muted-foreground">
+              Shipping & taxes calculated at checkout.
+            </p>
           </div>
         )}
       </aside>

@@ -81,8 +81,8 @@ function AdminPage() {
   async function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
-    
-    if (!file.type.startsWith('image/')) {
+
+    if (!file.type.startsWith("image/")) {
       setError("Please select a valid image file");
       return;
     }
@@ -90,7 +90,7 @@ function AdminPage() {
       setError("Image must be smaller than 5MB");
       return;
     }
-    
+
     setUploading(true);
     setError(null);
     try {
@@ -107,6 +107,20 @@ function AdminPage() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+
+    if (!form.title.trim()) {
+      setError("Title is required");
+      return;
+    }
+    if (!form.price || Number(form.price) <= 0) {
+      setError("Price must be greater than 0");
+      return;
+    }
+    if (!form.image_url) {
+      setError("Please upload a product image");
+      return;
+    }
+
     setBusy(true);
     setError(null);
     try {
@@ -126,8 +140,10 @@ function AdminPage() {
       resetForm();
       qc.invalidateQueries({ queryKey: ["admin-products"] });
       qc.invalidateQueries({ queryKey: ["shop-products"] });
-    } catch (err: any) {
-      setError(err.message ?? "Save failed");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Save failed";
+      setError(message);
+      console.error("Save error:", err);
     } finally {
       setBusy(false);
     }
@@ -139,8 +155,10 @@ function AdminPage() {
       await deleteProduct(id);
       qc.invalidateQueries({ queryKey: ["admin-products"] });
       qc.invalidateQueries({ queryKey: ["shop-products"] });
-    } catch (err: any) {
-      alert(err.message ?? "Delete failed");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Delete failed";
+      alert(message);
+      console.error("Delete error:", err);
     }
   }
 
@@ -152,7 +170,9 @@ function AdminPage() {
   if (loading) {
     return (
       <Layout>
-        <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">Loading…</div>
+        <div className="flex min-h-[60vh] items-center justify-center text-muted-foreground">
+          Loading…
+        </div>
       </Layout>
     );
   }
@@ -163,8 +183,8 @@ function AdminPage() {
         <section className="mx-auto max-w-md px-4 py-24 text-center">
           <h1 className="font-serif text-3xl">Not authorized</h1>
           <p className="mt-3 text-sm text-muted-foreground">
-            Your account ({user.email}) doesn't have admin access. Ask the owner to grant your account
-            the admin role from the backend.
+            Your account ({user.email}) doesn't have admin access. Ask the owner to grant your
+            account the admin role from the backend.
           </p>
           <div className="mt-6 flex flex-col gap-3">
             <button
@@ -173,7 +193,10 @@ function AdminPage() {
             >
               Sign out
             </button>
-            <Link to="/" className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary">
+            <Link
+              to="/"
+              className="text-xs uppercase tracking-widest text-muted-foreground hover:text-primary"
+            >
               ← Back to store
             </Link>
           </div>
@@ -187,7 +210,9 @@ function AdminPage() {
       <section className="mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">Admin</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[var(--gold)]">
+              Admin
+            </p>
             <h1 className="mt-2 font-serif text-4xl">Manage Products</h1>
             <p className="mt-1 text-sm text-muted-foreground">Signed in as {user?.email}</p>
           </div>
@@ -200,11 +225,18 @@ function AdminPage() {
         </div>
 
         {/* Form */}
-        <form onSubmit={submit} className="mt-10 grid gap-4 rounded-2xl border border-border bg-card p-6 md:grid-cols-2">
-          <h2 className="md:col-span-2 font-serif text-2xl">{editingId ? "Edit product" : "Add new product"}</h2>
+        <form
+          onSubmit={submit}
+          className="mt-10 grid gap-4 rounded-2xl border border-border bg-card p-6 md:grid-cols-2"
+        >
+          <h2 className="md:col-span-2 font-serif text-2xl">
+            {editingId ? "Edit product" : "Add new product"}
+          </h2>
 
           <div>
-            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">Title</label>
+            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">
+              Title
+            </label>
             <input
               required
               value={form.title}
@@ -214,7 +246,9 @@ function AdminPage() {
           </div>
 
           <div>
-            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">Price (USD)</label>
+            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">
+              Price (USD)
+            </label>
             <input
               required
               type="number"
@@ -227,14 +261,18 @@ function AdminPage() {
           </div>
 
           <div>
-            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">Category</label>
+            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">
+              Category
+            </label>
             <select
               value={form.category}
               onChange={(e) => setForm({ ...form, category: e.target.value })}
               className="mt-1 w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm outline-none focus:border-primary"
             >
               {categories.map((c) => (
-                <option key={c} value={c}>{c}</option>
+                <option key={c} value={c}>
+                  {c}
+                </option>
               ))}
             </select>
           </div>
@@ -247,11 +285,15 @@ function AdminPage() {
               onChange={(e) => setForm({ ...form, in_stock: e.target.checked })}
               className="h-4 w-4"
             />
-            <label htmlFor="instock" className="text-sm">In stock</label>
+            <label htmlFor="instock" className="text-sm">
+              In stock
+            </label>
           </div>
 
           <div className="md:col-span-2">
-            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">Description</label>
+            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">
+              Description
+            </label>
             <textarea
               rows={3}
               value={form.description}
@@ -261,7 +303,9 @@ function AdminPage() {
           </div>
 
           <div className="md:col-span-2">
-            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">Product image</label>
+            <label className="text-xs font-semibold uppercase tracking-widest text-foreground/70">
+              Product image
+            </label>
             <div className="mt-2 flex flex-wrap items-center gap-4">
               {form.image_url ? (
                 <img src={form.image_url} alt="" className="h-24 w-24 rounded-lg object-cover" />
@@ -332,17 +376,25 @@ function AdminPage() {
                       <td className="p-4">
                         <div className="flex items-center gap-3">
                           {p.image_url ? (
-                            <img src={p.image_url} alt="" className="h-12 w-12 rounded-md object-cover" />
+                            <img
+                              src={p.image_url}
+                              alt=""
+                              className="h-12 w-12 rounded-md object-cover"
+                            />
                           ) : (
                             <div className="h-12 w-12 rounded-md bg-muted" />
                           )}
                           <span className="font-medium">{p.title}</span>
                         </div>
                       </td>
-                      <td className="p-4 hidden sm:table-cell text-muted-foreground">{p.category}</td>
+                      <td className="p-4 hidden sm:table-cell text-muted-foreground">
+                        {p.category}
+                      </td>
                       <td className="p-4 text-[var(--gold)]">${Number(p.price).toFixed(2)}</td>
                       <td className="p-4 hidden md:table-cell">
-                        <span className={`rounded-full px-2 py-0.5 text-xs ${p.in_stock ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}>
+                        <span
+                          className={`rounded-full px-2 py-0.5 text-xs ${p.in_stock ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"}`}
+                        >
                           {p.in_stock ? "In stock" : "Sold out"}
                         </span>
                       </td>
