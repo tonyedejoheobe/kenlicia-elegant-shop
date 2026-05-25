@@ -23,6 +23,16 @@ function AuthPage() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    
+    if (!email.trim() || !password.trim()) {
+      setError("Email and password are required");
+      return;
+    }
+    if (password.length < 6) {
+      setError("Password must be at least 6 characters");
+      return;
+    }
+    
     setError(null);
     setLoading(true);
     try {
@@ -33,13 +43,17 @@ function AuthPage() {
           options: { emailRedirectTo: window.location.origin + "/admin" },
         });
         if (error) throw error;
+        setError(null);
+        alert("Check your email for confirmation link!");
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
       }
       navigate({ to: "/admin" });
-    } catch (err: any) {
-      setError(err.message ?? "Something went wrong");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Something went wrong";
+      setError(message);
+      console.error("Auth error:", err);
     } finally {
       setLoading(false);
     }

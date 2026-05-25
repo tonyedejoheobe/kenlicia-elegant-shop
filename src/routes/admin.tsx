@@ -81,13 +81,25 @@ function AdminPage() {
   async function handleImage(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
     if (!file) return;
+    
+    if (!file.type.startsWith('image/')) {
+      setError("Please select a valid image file");
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setError("Image must be smaller than 5MB");
+      return;
+    }
+    
     setUploading(true);
     setError(null);
     try {
       const url = await uploadProductImage(file);
       setForm((f) => ({ ...f, image_url: url }));
-    } catch (err: any) {
-      setError(err.message ?? "Upload failed");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Upload failed";
+      setError(message);
+      console.error("Upload error:", err);
     } finally {
       setUploading(false);
     }
