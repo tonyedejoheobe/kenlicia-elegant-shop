@@ -1,8 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Layout } from "@/components/site/Layout";
 import { ProductCard } from "@/components/site/ProductCard";
-import { products, categories, type Category } from "@/data/products";
+import { products as staticProducts, categories, type Category, type Product } from "@/data/products";
+import { fetchProducts } from "@/lib/products-db";
 
 export const Route = createFileRoute("/shop")({
   head: () => ({
@@ -16,11 +18,28 @@ export const Route = createFileRoute("/shop")({
   component: Shop,
 });
 
-type Filter = "All" | Category;
+type Filter = "All" | Category | string;
 
 function Shop() {
   const [filter, setFilter] = useState<Filter>("All");
-  const filtered = filter === "All" ? products : products.filter((p) => p.category === filter);
+
+  const { data: dbProducts } = useQuery({
+    queryKey: ["shop-products"],
+    queryFn: fetchProducts,
+  });
+
+  const fromDb: Product[] = (dbProducts ?? []).map((p) => ({
+    id: p.id,
+    title: p.title,
+    price: Number(p.price),
+    image: p.image_url ?? "",
+    category: p.category as Category,
+  }));
+
+  // Prefer DB products; fall back to static catalog if DB is empty
+  const all: Product[] = fromDb.length > 0 ? fromDb : staticProducts;
+
+  const filtered = filter === "All" ? all : all.filter((p) => p.category === filter);
   const tabs: Filter[] = ["All", ...categories];
 
   return (
