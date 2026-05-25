@@ -1,10 +1,11 @@
 import { Link } from "@tanstack/react-router";
-import { Search, User, ShoppingBag, Menu, X } from "lucide-react";
+import { Search, User, ShoppingBag, Menu, X, LayoutDashboard } from "lucide-react";
 import { useEffect, useState } from "react";
 import logo from "@/assets/logo.png";
 import { cartStore, useCart } from "@/lib/cart-store";
 import { SearchOverlay } from "./SearchOverlay";
 import { ThemeToggle } from "./ThemeToggle";
+import { useAuth } from "@/hooks/use-auth";
 
 const nav = [
   { to: "/", label: "Home" },
@@ -15,6 +16,7 @@ const nav = [
 
 export function Header() {
   const { items } = useCart();
+  const { user, isAdmin } = useAuth();
   const count = items.reduce((s, i) => s + i.qty, 0);
   const [open, setOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -58,9 +60,18 @@ export function Header() {
             <Search className="h-5 w-5" />
           </button>
           <ThemeToggle />
-          <button aria-label="Account" className="hidden rounded-full p-2.5 text-foreground/80 transition hover:bg-accent hover:text-primary sm:inline-flex">
+          {isAdmin && (
+            <Link
+              to="/admin"
+              aria-label="Admin"
+              className="rounded-full p-2.5 text-foreground/80 transition hover:bg-accent hover:text-primary"
+            >
+              <LayoutDashboard className="h-5 w-5" />
+            </Link>
+          )}
+          <Link to={user ? "/admin" : "/auth"} aria-label="Account" className="hidden rounded-full p-2.5 text-foreground/80 transition hover:bg-accent hover:text-primary sm:inline-flex">
             <User className="h-5 w-5" />
-          </button>
+          </Link>
           <button
             aria-label="Cart"
             onClick={() => cartStore.openDrawer()}
