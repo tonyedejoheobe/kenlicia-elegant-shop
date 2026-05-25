@@ -3,18 +3,5 @@
   "name": "kenlicia-elegant-shop",
   "compatibility_date": "2025-09-24",
   "compatibility_flags": ["nodejs_compat"],
-  "main": "src/server.ts",
-  "build": {
-    "command": "npm run build"
-  },
-  "env": {
-    "production": {
-      "routes": [
-        {
-          "pattern": "kenlicia-elegant-shop.pages.dev/*",
-          "zone_name": "pages.dev"
-        }
-      ]
-    }
-  }
+  "main": "src/server.ts"
 }
