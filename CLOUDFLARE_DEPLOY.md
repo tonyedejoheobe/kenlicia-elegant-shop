@@ -50,12 +50,19 @@ wrangler deploy --name kenlicia-elegant-shop
 
 ## Environment Variables
 
+This repo now includes a `.env.example` file and ignores local `.env` files. Do not commit your real keys.
+
 If you need environment variables (Supabase, API keys, etc.):
+
+### Locally
+1. Copy `.env.example` to `.env`
+2. Fill in your Supabase values
 
 ### Via Wrangler CLI:
 ```bash
 wrangler secret put SUPABASE_URL
-wrangler secret put SUPABASE_ANON_KEY
+wrangler secret put SUPABASE_PUBLISHABLE_KEY
+wrangler secret put SUPABASE_SERVICE_ROLE_KEY
 ```
 
 ### Or in Cloudflare Dashboard:
