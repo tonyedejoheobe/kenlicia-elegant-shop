@@ -86,6 +86,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
+      { name: "twitter:title", content: "Kenliciaastetics — Elegance in Everyworld" },
+      { name: "description", content: "Kenliciaastetics Elegance is a mobile-responsive e-commerce website for handmade crochet and beadwork." },
+      { property: "og:description", content: "Kenliciaastetics Elegance is a mobile-responsive e-commerce website for handmade crochet and beadwork." },
+      { name: "twitter:description", content: "Kenliciaastetics Elegance is a mobile-responsive e-commerce website for handmade crochet and beadwork." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bab449c3-8f64-4e58-b7af-8c4bbc9f0010/id-preview-231a2545--a06c0282-e6be-4f2c-8703-66b89b8a9dc9.lovable.app-1779812703881.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/bab449c3-8f64-4e58-b7af-8c4bbc9f0010/id-preview-231a2545--a06c0282-e6be-4f2c-8703-66b89b8a9dc9.lovable.app-1779812703881.png" },
     ],
     links: [
       { rel: "icon", href: logo, type: "image/png" },
