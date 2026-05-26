@@ -10,7 +10,7 @@ import catAccessories from "@/assets/cat-accessories.jpg";
 import catFacial from "@/assets/cat-facial.jpg";
 import catScents from "@/assets/cat-scents.jpg";
 import catBeauty from "@/assets/cat-beauty.jpg";
-import founder from "@/assets/founder.jpg";
+import founder from "@/assets/IMG_4660 (1).jpeg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
