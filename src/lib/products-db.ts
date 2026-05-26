@@ -13,12 +13,17 @@ export type DbProduct = {
 };
 
 export async function fetchProducts(): Promise<DbProduct[]> {
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .order("created_at", { ascending: false });
-  if (error) throw error;
-  return (data ?? []) as DbProduct[];
+  try {
+    const { data, error } = await supabase
+      .from("products")
+      .select("*")
+      .order("created_at", { ascending: false });
+    if (error) throw error;
+    return (data ?? []) as DbProduct[];
+  } catch (error) {
+    console.warn("Supabase fetch failed, falling back to static products:", error);
+    return [];
+  }
 }
 
 export async function createProduct(input: Omit<DbProduct, "id" | "created_at" | "updated_at">) {

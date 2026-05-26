@@ -2,14 +2,83 @@
 import { createClient } from "@supabase/supabase-js";
 import type { Database } from "./types";
 
+function createNoOpSupabaseQuery() {
+  const proxyTarget = {} as Record<string, unknown>;
+  let proxy: any;
+
+  function createResult() {
+    const result = {
+      then(onFulfilled: (value: unknown) => unknown) {
+        onFulfilled({ data: [], error: null });
+        return result;
+      },
+      catch() {
+        return result;
+      },
+    };
+    return result;
+  }
+
+  const handler: ProxyHandler<typeof proxyTarget> = {
+    get(_, prop) {
+      if (prop === "upload") {
+        return async () => ({ data: null, error: null });
+      }
+      if (prop === "getPublicUrl") {
+        return () => ({ data: { publicUrl: "" }, error: null });
+      }
+      if (prop === "then") {
+        return (onFulfilled: (value: unknown) => unknown) => {
+          onFulfilled({ data: [], error: null });
+          return proxy;
+        };
+      }
+      if (prop === "catch") {
+        return () => proxy;
+      }
+      if (typeof prop === "string" && ["select", "insert", "update", "delete", "maybeSingle", "single"].includes(prop)) {
+        return () => createResult();
+      }
+      if (typeof prop === "string" && ["eq", "order", "limit", "range", "upsert"].includes(prop)) {
+        return () => proxy;
+      }
+      return () => proxy;
+    },
+  };
+
+  proxy = new Proxy(proxyTarget, handler);
+  return proxy;
+}
+
+function createNoOpSupabaseClient() {
+  const noOpAuth = {
+    onAuthStateChange(callback: (event: string, session: unknown) => void) {
+      const subscription = { unsubscribe: () => {} };
+      setTimeout(() => callback("SIGNED_OUT", { session: null, user: null }), 0);
+      return { data: { subscription }, error: null };
+    },
+    getSession: async () => ({ data: { session: null }, error: null }),
+  };
+
+  return {
+    auth: noOpAuth,
+    from: () => createNoOpSupabaseQuery(),
+  } as unknown as ReturnType<typeof createClient>;
+}
+
 function createSupabaseClient() {
-  // Use import.meta.env for client-side (Vite build-time replacement)
-  // Fall back to process.env for SSR (server-side rendering)
   const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || process.env.SUPABASE_URL;
   const SUPABASE_PUBLISHABLE_KEY =
     import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY || process.env.SUPABASE_PUBLISHABLE_KEY;
 
   if (!SUPABASE_URL || !SUPABASE_PUBLISHABLE_KEY) {
+    if (typeof window !== "undefined") {
+      console.warn(
+        "[Supabase] Missing VITE_SUPABASE_URL/VITE_SUPABASE_PUBLISHABLE_KEY in the browser. Using no-op fallback.",
+      );
+      return createNoOpSupabaseClient();
+    }
+
     const missing = [
       ...(!SUPABASE_URL ? ["SUPABASE_URL"] : []),
       ...(!SUPABASE_PUBLISHABLE_KEY ? ["SUPABASE_PUBLISHABLE_KEY"] : []),
