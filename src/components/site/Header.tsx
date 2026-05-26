@@ -72,7 +72,7 @@ export function Header() {
               </Link>
             )}
             <Link
-              to={user ? "/admin" : "/auth"}
+              to={user ? "/account" : "/auth"}
               aria-label="Account"
               className="hidden rounded-full p-2.5 text-foreground/80 transition hover:bg-accent hover:text-primary sm:inline-flex"
             >
