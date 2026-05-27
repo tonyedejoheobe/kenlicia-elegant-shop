@@ -12,7 +12,7 @@ import {
   uploadProductImage,
   type DbProduct,
 } from "@/lib/products-db";
-import { categories } from "@/data/products";
+import { categories, products as staticProducts } from "@/data/products";
 import { Pencil, Trash2, Plus, LogOut, ImagePlus } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
@@ -48,6 +48,7 @@ function AdminPage() {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [importing, setImporting] = useState(false);
 
   useEffect(() => {
     if (!loading && !user) navigate({ to: "/auth" });
@@ -167,6 +168,35 @@ function AdminPage() {
     navigate({ to: "/" });
   }
 
+  async function importDefaults() {
+    if (!confirm("Import the default product catalog into the database? Existing items with the same title will be skipped.")) return;
+    setImporting(true);
+    setError(null);
+    try {
+      const existing = (products ?? []).map((p) => p.title.toLowerCase());
+      const toInsert = staticProducts.filter((p) => !existing.includes(p.title.toLowerCase()));
+      for (const p of toInsert) {
+        await createProduct({
+          title: p.title,
+          description: null,
+          price: p.price,
+          image_url: p.image, // bundled asset URL resolved by Vite
+          category: p.category,
+          in_stock: true,
+        });
+      }
+      qc.invalidateQueries({ queryKey: ["admin-products"] });
+      qc.invalidateQueries({ queryKey: ["shop-products"] });
+      alert(`Imported ${toInsert.length} product(s).`);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Import failed";
+      setError(message);
+      console.error("Import error:", err);
+    } finally {
+      setImporting(false);
+    }
+  }
+
   if (loading) {
     return (
       <Layout>
@@ -216,12 +246,21 @@ function AdminPage() {
             <h1 className="mt-2 font-serif text-4xl">Manage Products</h1>
             <p className="mt-1 text-sm text-muted-foreground">Signed in as {user?.email}</p>
           </div>
-          <button
-            onClick={signOut}
-            className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-widest hover:border-primary"
-          >
-            <LogOut className="h-4 w-4" /> Sign out
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={importDefaults}
+              disabled={importing}
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)] px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--gold)] hover:bg-[var(--gold)]/10 disabled:opacity-50"
+            >
+              {importing ? "Importing…" : "Import default catalog"}
+            </button>
+            <button
+              onClick={signOut}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-widest hover:border-primary"
+            >
+              <LogOut className="h-4 w-4" /> Sign out
+            </button>
+          </div>
         </div>
 
         {/* Form */}
