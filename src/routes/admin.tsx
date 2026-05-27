@@ -168,6 +168,35 @@ function AdminPage() {
     navigate({ to: "/" });
   }
 
+  async function importDefaults() {
+    if (!confirm("Import the default product catalog into the database? Existing items with the same title will be skipped.")) return;
+    setImporting(true);
+    setError(null);
+    try {
+      const existing = (products ?? []).map((p) => p.title.toLowerCase());
+      const toInsert = staticProducts.filter((p) => !existing.includes(p.title.toLowerCase()));
+      for (const p of toInsert) {
+        await createProduct({
+          title: p.title,
+          description: null,
+          price: p.price,
+          image_url: p.image, // bundled asset URL resolved by Vite
+          category: p.category,
+          in_stock: true,
+        });
+      }
+      qc.invalidateQueries({ queryKey: ["admin-products"] });
+      qc.invalidateQueries({ queryKey: ["shop-products"] });
+      alert(`Imported ${toInsert.length} product(s).`);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Import failed";
+      setError(message);
+      console.error("Import error:", err);
+    } finally {
+      setImporting(false);
+    }
+  }
+
   if (loading) {
     return (
       <Layout>
