@@ -19,6 +19,7 @@ function AuthPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [info, setInfo] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   async function submit(e: React.FormEvent) {
@@ -34,24 +35,39 @@ function AuthPage() {
     }
 
     setError(null);
+    setInfo(null);
     setLoading(true);
     try {
       if (mode === "signup") {
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/admin" },
+          options: { emailRedirectTo: window.location.origin + "/account" },
         });
         if (error) throw error;
-        setError(null);
-        alert("Check your email for confirmation link!");
+        if (data.session) {
+          navigate({ to: "/account" });
+        } else {
+          setInfo("Account created! Check your email for a confirmation link, then sign in.");
+          setMode("signin");
+          setPassword("");
+        }
       } else {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
+        navigate({ to: "/account" });
       }
-      navigate({ to: "/admin" });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "Something went wrong";
+      let message = err instanceof Error ? err.message : "Something went wrong";
+      if (/pwned|weak_password|known to be weak/i.test(message)) {
+        message = "That password has appeared in a known data breach. Please choose a stronger, unique password.";
+      } else if (/Invalid login credentials/i.test(message)) {
+        message = "Wrong email or password.";
+      } else if (/already registered|User already/i.test(message)) {
+        message = "An account with this email already exists. Try signing in.";
+      } else if (/Email not confirmed/i.test(message)) {
+        message = "Please confirm your email first — check your inbox for the link.";
+      }
       setError(message);
       console.error("Auth error:", err);
     } finally {
@@ -97,6 +113,7 @@ function AuthPage() {
           </div>
 
           {error && <p className="text-sm text-destructive">{error}</p>}
+          {info && <p className="text-sm text-primary">{info}</p>}
 
           <button
             type="submit"
