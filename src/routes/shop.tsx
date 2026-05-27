@@ -48,8 +48,14 @@ function Shop() {
     category: p.category as Category,
   }));
 
-  // Prefer DB products; fall back to static catalog if DB is empty
-  const all: Product[] = fromDb.length > 0 ? fromDb : staticProducts;
+  // Merge: show DB products first, then static catalog items whose title
+  // hasn't already been imported into the DB. This way admin-added products
+  // appear alongside the default catalog instead of replacing it.
+  const dbTitles = new Set(fromDb.map((p) => p.title.toLowerCase()));
+  const staticRemaining = staticProducts.filter(
+    (p) => !dbTitles.has(p.title.toLowerCase()),
+  );
+  const all: Product[] = [...fromDb, ...staticRemaining];
 
   const filtered = filter === "All" ? all : all.filter((p) => p.category === filter);
   const tabs: Filter[] = ["All", ...categories];
