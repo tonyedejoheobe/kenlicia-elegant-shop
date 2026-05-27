@@ -113,6 +113,7 @@ function AuthPage() {
           </div>
 
           {error && <p className="text-sm text-destructive">{error}</p>}
+          {info && <p className="text-sm text-primary">{info}</p>}
 
           <button
             type="submit"
