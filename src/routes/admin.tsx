@@ -246,12 +246,21 @@ function AdminPage() {
             <h1 className="mt-2 font-serif text-4xl">Manage Products</h1>
             <p className="mt-1 text-sm text-muted-foreground">Signed in as {user?.email}</p>
           </div>
-          <button
-            onClick={signOut}
-            className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-widest hover:border-primary"
-          >
-            <LogOut className="h-4 w-4" /> Sign out
-          </button>
+          <div className="flex flex-wrap gap-2">
+            <button
+              onClick={importDefaults}
+              disabled={importing}
+              className="inline-flex items-center gap-2 rounded-full border border-[var(--gold)] px-4 py-2 text-xs font-semibold uppercase tracking-widest text-[var(--gold)] hover:bg-[var(--gold)]/10 disabled:opacity-50"
+            >
+              {importing ? "Importing…" : "Import default catalog"}
+            </button>
+            <button
+              onClick={signOut}
+              className="inline-flex items-center gap-2 rounded-full border border-border px-4 py-2 text-xs font-semibold uppercase tracking-widest hover:border-primary"
+            >
+              <LogOut className="h-4 w-4" /> Sign out
+            </button>
+          </div>
         </div>
 
         {/* Form */}
