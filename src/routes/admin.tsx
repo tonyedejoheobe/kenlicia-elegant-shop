@@ -12,7 +12,7 @@ import {
   uploadProductImage,
   type DbProduct,
 } from "@/lib/products-db";
-import { categories } from "@/data/products";
+import { categories, products as staticProducts } from "@/data/products";
 import { Pencil, Trash2, Plus, LogOut, ImagePlus } from "lucide-react";
 
 export const Route = createFileRoute("/admin")({
